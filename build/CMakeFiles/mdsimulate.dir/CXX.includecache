@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../head/myrandom.h
+math.h
+-
+
+../head/particle.h
+iostream
+-
+vector
+-
+
+/Users/jiahaozhang/Documents/rrsimulation/ripen/main.cpp
+iostream
+-
+myrandom.h
+/Users/jiahaozhang/Documents/rrsimulation/ripen/myrandom.h
+particle.h
+/Users/jiahaozhang/Documents/rrsimulation/ripen/particle.h
+vector
+-
+cmath
+-
+
+/Users/jiahaozhang/Documents/rrsimulation/ripen/src/fire.cpp
+
