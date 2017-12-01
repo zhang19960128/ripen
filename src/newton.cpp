@@ -68,12 +68,14 @@ void freeze(int size,particle* allpart){
 		allpart[i].resetspeed();
 	}
 }
-void leapfrogone(int size,double deltat,particle* allpart){
+void leapfrogone(int size,double deltat,double len,particle* allpart){
 	std::vector<double> templocation(3,0);
 	std::vector<double> tempspeed(3,0);
 	for(size_t i=0;i<size;i++){
 		for(size_t j=0;j<3;j++){
 			templocation[j]=allpart[i].getcoordinate()[j]+deltat*allpart[i].getspeed()[j]+1.0/2*allpart[i].getforce()[j]*deltat*deltat;
+			templocation[j]=templocation[j]/len;
+			templocation[j]=(templocation[j]-round(templocation[j]))*len;
 			tempspeed[j]=allpart[i].getspeed()[j]+0.5*deltat*allpart[i].getforce()[j];
 		}
 		allpart[i].changeposition(templocation);
