@@ -6,15 +6,17 @@
 class particle{
 	public:
 		particle()=default;
-		particle(std::vector<double> coord,std::vector<double> spee,double ra){
+		particle(std::vector<double> coord,std::vector<double> spee,std::vector<double> forc,double ra){
 			coordinate=coord;
 			speed=spee;
+			force=forc;
 			radius=ra;
 		};
 		particle(particle& temp){
 			coordinate=temp.coordinate;
 			speed=temp.speed;
 			radius=temp.radius;
+			force=temp.force;
 		};
 		std::vector<double> getcoordinate(){
 			return coordinate;
@@ -22,6 +24,9 @@ class particle{
 		std::vector<double> getspeed(){
 			return speed;
 		};
+		std::vector<double> getforce(){
+			return force;
+		}
 		double getradius(){
 			return radius;
 		};
@@ -41,6 +46,9 @@ class particle{
 		void changespeed(std::vector<double>& spee){
 			speed=spee;
 		}
+		void changeforce(std::vector<double>& forc){
+			force=forc;
+		}
 		void resetspeed(){
 			std::vector<double> temp(3,0);
 			speed=temp;
@@ -57,11 +65,13 @@ class particle{
 		~particle(){
 			coordinate.clear();
 			speed.clear();
+			force.clear();
 		};
 	private:
 		std::vector<double> coordinate;
 		std::vector<double> speed;
+		std::vector<double> force;
 		double radius;
 };
-particle initial(std::vector<double>,std::vector<double>,double);
+particle initial(std::vector<double>,std::vector<double>,std::vector<double>,double);
 #endif

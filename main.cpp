@@ -10,7 +10,7 @@ extern double f_dec;
 extern double alpha_start;
 extern double f_alpha;
 int main(){
-	int N=200;
+	int N=100;
 	double deltat=0.01;
 	double deltatmax=deltat*10;
 	double len;//configure the size of a cubic to store the bubbles. 
@@ -20,12 +20,13 @@ int main(){
 	particle* allpart=new particle[N];
 	std::vector<double> coord(3,0.0);
 	std::vector<double> spee(3,0.0);
+	std::vector<double> force(3,0.0);
 	//generate the random radius for those particles.
 	for(size_t t=0;t<N;t++){
 		do{
 			tempr=gaussian(0.5,0.5);
 		}while(tempr<0);
-		allpart[t]=initial(coord,spee,tempr);
+		allpart[t]=initial(coord,spee,force,tempr);
 	}
 	double temp_volume=0;
 	for(size_t t=0;t<N;t++){
@@ -41,11 +42,13 @@ int main(){
 		allpart[i].changeposition(coord);
 	}
 	//start my fire algorithm
-	double pow=0;
+	std::vector<double> powmaxf;
 	double count=0;
 	do{
-		pow=powersetspeed(N,alpha,allpart);
-		if(pow>0){
+		leapfrogone(N,deltat,allpart);
+		powmaxf=powersetspeed(N,len,alpha,allpart);
+		leapfrogtwo(N,deltat,allpart);
+		if(powmaxf[0]>0){
 			if(count>N_min){
 				deltat=deltat*f_inc<deltatmax?deltat*f_inc:deltatmax;
 				alpha=alpha*f_alpha;
@@ -59,6 +62,6 @@ int main(){
 			alpha=alpha_start;
 		}
 		//Go to MD
-
-	}while(pow);
+		std::cout<<"maxforce is:" <<powmaxf[1]<<std::endl;
+	}while(powmaxf[1]>1e-9);
 }
