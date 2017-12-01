@@ -11,3 +11,6 @@ CMakeFiles/mdsimulate.dir/src/fire.cpp.o: ../src/fire.cpp
 CMakeFiles/mdsimulate.dir/src/newton.cpp.o: ../head/particle.h
 CMakeFiles/mdsimulate.dir/src/newton.cpp.o: ../src/newton.cpp
 
+CMakeFiles/mdsimulate.dir/src/particle.cpp.o: ../head/particle.h
+CMakeFiles/mdsimulate.dir/src/particle.cpp.o: ../src/particle.cpp
+

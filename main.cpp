@@ -39,4 +39,5 @@ int main(){
 	//start my fire algorithm
 	std::vector<double> force(3,0);
 	force=interactall(1,N,allpart);
+	std::cout<<force[0]<<std::endl;
 }
