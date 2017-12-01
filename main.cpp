@@ -37,6 +37,6 @@ int main(){
 		allpart[i].changeposition(coord);
 	}
 	//start my fire algorithm
-	vector<double> force(3,0);
+	std::vector<double> force(3,0);
 	force=interactall(1,N,allpart);
 }
