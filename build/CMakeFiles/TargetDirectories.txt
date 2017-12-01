@@ -1,3 +1,0 @@
-/Users/jiahaozhang/Documents/rrsimulation/ripen/build/CMakeFiles/rebuild_cache.dir
-/Users/jiahaozhang/Documents/rrsimulation/ripen/build/CMakeFiles/edit_cache.dir
-/Users/jiahaozhang/Documents/rrsimulation/ripen/build/CMakeFiles/mdsimulate.dir
