@@ -30,7 +30,7 @@ class particle{
 		void changeposition(std::vector<double>& posi){
 			coordinate=posi;
 		};
-	//	friend std::ostream& operator<<(std::ostream&,particle&);
+		friend std::ostream& operator<<(std::ostream&,particle&);
 		~particle(){
 			coordinate.clear();
 			speed.clear();
