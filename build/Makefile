@@ -177,6 +177,33 @@ src/fire.cpp.s:
 	$(MAKE) -f CMakeFiles/mdsimulate.dir/build.make CMakeFiles/mdsimulate.dir/src/fire.cpp.s
 .PHONY : src/fire.cpp.s
 
+src/newton.o: src/newton.cpp.o
+
+.PHONY : src/newton.o
+
+# target to build an object file
+src/newton.cpp.o:
+	$(MAKE) -f CMakeFiles/mdsimulate.dir/build.make CMakeFiles/mdsimulate.dir/src/newton.cpp.o
+.PHONY : src/newton.cpp.o
+
+src/newton.i: src/newton.cpp.i
+
+.PHONY : src/newton.i
+
+# target to preprocess a source file
+src/newton.cpp.i:
+	$(MAKE) -f CMakeFiles/mdsimulate.dir/build.make CMakeFiles/mdsimulate.dir/src/newton.cpp.i
+.PHONY : src/newton.cpp.i
+
+src/newton.s: src/newton.cpp.s
+
+.PHONY : src/newton.s
+
+# target to generate assembly for a file
+src/newton.cpp.s:
+	$(MAKE) -f CMakeFiles/mdsimulate.dir/build.make CMakeFiles/mdsimulate.dir/src/newton.cpp.s
+.PHONY : src/newton.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -192,6 +219,9 @@ help:
 	@echo "... src/fire.o"
 	@echo "... src/fire.i"
 	@echo "... src/fire.s"
+	@echo "... src/newton.o"
+	@echo "... src/newton.i"
+	@echo "... src/newton.s"
 .PHONY : help
 
 

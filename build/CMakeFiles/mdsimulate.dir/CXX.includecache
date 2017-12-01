@@ -10,6 +10,12 @@
 math.h
 -
 
+../head/newton.h
+particle.h
+../head/particle.h
+iostream
+-
+
 ../head/particle.h
 iostream
 -
@@ -25,8 +31,18 @@ particle.h
 /Users/jiahaozhang/Documents/rrsimulation/ripen/particle.h
 vector
 -
+newton.h
+/Users/jiahaozhang/Documents/rrsimulation/ripen/newton.h
 cmath
 -
 
 /Users/jiahaozhang/Documents/rrsimulation/ripen/src/fire.cpp
+
+/Users/jiahaozhang/Documents/rrsimulation/ripen/src/newton.cpp
+cmath
+-
+iostream
+-
+particle.h
+/Users/jiahaozhang/Documents/rrsimulation/ripen/src/particle.h
 

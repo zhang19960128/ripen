@@ -2,6 +2,7 @@
 #include "myrandom.h"
 #include "particle.h"
 #include <vector>
+#include "newton.h"
 #include <cmath>
 extern int N_min;
 extern double f_inc;
@@ -29,11 +30,12 @@ int main(){
 	}
 	len=cbrt(temp_volume);
 	//generate the random position for those particles.
-	for(size_t i=0;i<n;i++){
+	for(size_t i=0;i<N;i++){
 		coord[0]=len*genrand();
 		coord[1]=len*genrand();
 		coord[2]=len*genrand();
 		allpart[i].changeposition(coord);
 	}
 	//start my fire algorithm
+	
 }

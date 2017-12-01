@@ -3,7 +3,11 @@
 
 CMakeFiles/mdsimulate.dir/main.cpp.o
  ../head/myrandom.h
+ ../head/newton.h
  ../head/particle.h
  /Users/jiahaozhang/Documents/rrsimulation/ripen/main.cpp
 CMakeFiles/mdsimulate.dir/src/fire.cpp.o
  /Users/jiahaozhang/Documents/rrsimulation/ripen/src/fire.cpp
+CMakeFiles/mdsimulate.dir/src/newton.cpp.o
+ ../head/particle.h
+ /Users/jiahaozhang/Documents/rrsimulation/ripen/src/newton.cpp

@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/jiahaozhang/Documents/rrsimulation/ripen/main.cpp" "/Users/jiahaozhang/Documents/rrsimulation/ripen/build/CMakeFiles/mdsimulate.dir/main.cpp.o"
   "/Users/jiahaozhang/Documents/rrsimulation/ripen/src/fire.cpp" "/Users/jiahaozhang/Documents/rrsimulation/ripen/build/CMakeFiles/mdsimulate.dir/src/fire.cpp.o"
+  "/Users/jiahaozhang/Documents/rrsimulation/ripen/src/newton.cpp" "/Users/jiahaozhang/Documents/rrsimulation/ripen/build/CMakeFiles/mdsimulate.dir/src/newton.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/mdsimulate.dir/src/fire.cpp.o"
+  "CMakeFiles/mdsimulate.dir/src/newton.cpp.o"
   "CMakeFiles/mdsimulate.dir/main.cpp.o"
   "../mdsimulate.pdb"
   "../mdsimulate"
