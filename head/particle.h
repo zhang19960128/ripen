@@ -25,14 +25,28 @@ class particle{
 		double getradius(){
 			return radius;
 		};
+		double getspeedabs(){
+			double temp=0;
+			for(size_t i=0;i<3;i++){
+				temp=temp+speed[i]*speed[i];
+			}
+			return sqrt(temp);
+		}
 		double getvolume(){
 			return 3.141592653*4/3.0*radius*radius*radius;
 		}
 		void changeposition(std::vector<double>& posi){
 			coordinate=posi;
 		};
+		void changespeed(std::vector<double>& spee){
+			speed=spee;
+		}
+		void resetspeed(){
+			std::vector<double> temp(3,0);
+			speed=temp;
+		}
 		//changing radius by in comming radius
-		void changerby(double r){
+		void changerbr(double r){
 			radius=r;
 		}
 		//changing radius by know the volume

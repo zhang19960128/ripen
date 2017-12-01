@@ -30,3 +30,27 @@ std::vector<double>interactall(int index,int size,particle* allpart){
 	}
 	return allforce;
 }
+double powersetspeed(int size,double alpha,particle* allpart){
+	std::vector<double> tempforce(3,0);
+	std::vector<double> tempspeed(3,0);
+	double tempforceabs=0;
+	double temppower=0;
+	for(size_t i=0;i<size;i++){
+		tempforce=interactall(i,size,allpart);
+		for(size_t k=0;k<3;k++){
+			tempforceabs=tempforceabs+tempforce[k]*tempforce[k];
+		}
+		tempforceabs=sqrt(tempforceabs);
+		for(size_t j=0;j<3;j++){
+			temppower=temppower+allpart[i].getspeed()[j]*tempforce[j];
+			tempspeed[j]=(1-alpha)*allpart[i].getspeed()[j]+alpha*tempforce[j]/tempforceabs*allpart[i].getspeedabs();
+		}
+		allpart[i].changespeed(tempspeed);
+	}
+	return temppower;
+}
+double freeze(int size,particle* allpart){
+	for(size_t i=0;i<size;i++){
+		allpart[i].resetspeed();
+	}
+}
