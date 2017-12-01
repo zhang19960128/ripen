@@ -37,6 +37,8 @@ newton.h
 /Users/jiahaozhang/Documents/rrsimulation/ripen/newton.h
 cmath
 -
+fstream
+-
 
 /Users/jiahaozhang/Documents/rrsimulation/ripen/src/fire.cpp
 

@@ -4,6 +4,7 @@
 #include <vector>
 #include "newton.h"
 #include <cmath>
+#include <fstream>
 extern int N_min;
 extern double f_inc;
 extern double f_dec;
@@ -11,11 +12,15 @@ extern double alpha_start;
 extern double f_alpha;
 int main(){
 	int N=200;
-	double deltat=0.01;
-	double deltatmax=deltat*10;
+	std::fstream file1,file2;
+	file1.open("datafirst.txt",std::fstream::out);
+	file2.open("datasecond.txt",std::fstream::out);
+	double Dt=0.01;
+	double Dtmax=Dt*10;
 	double len;//configure the size of a cubic to store the bubbles. 
 	double fraction=0.88;
 	double tempr;
+	std::cout<<"f_inc="<<f_inc<<std::endl;
 	double alpha=alpha_start;
 	particle* allpart=new particle[N];
 	std::vector<double> coord(3,0.0);
@@ -46,24 +51,51 @@ int main(){
 	double count=0;
 	int i=0;
 	do{
-		leapfrogone(N,deltat,len,allpart);
+	if(i==5){
+		std::cout<<"the time inteval is: "<<Dt<<std::endl;
+			for(size_t t=0;t<N;t++){
+				for(size_t k=0;k<3;k++)
+					file1<<allpart[t].getcoordinate()[k]<<" ";
+				for(size_t k=0;k<3;k++)
+					file1<<allpart[t].getspeed()[k]<<" ";
+				for(size_t k=0;k<3;k++)
+					file1<<allpart[t].getforce()[k]<<" ";
+				file1<<allpart[t].getradius()<<" ";
+				file1<<std::endl;
+			}
+			file1.close();
+		}
+		leapfrogone(N,Dt,len,allpart);
+	if(i==6){
+			for(size_t t=0;t<N;t++){
+				for(size_t k=0;k<3;k++)
+					file2<<allpart[t].getcoordinate()[k]<<" ";
+				for(size_t k=0;k<3;k++)
+					file2<<allpart[t].getspeed()[k]<<" ";
+        for(size_t k=0;k<3;k++)
+					file1<<allpart[t].getforce()[k]<<" ";
+				file2<<allpart[t].getradius()<<" ";
+				file2<<std::endl;
+			}
+			file2.close();
+		}
 		powmaxf=powersetspeed(N,len,alpha,allpart);
-		leapfrogtwo(N,deltat,allpart);
+		leapfrogtwo(N,Dt,allpart);
 		if(powmaxf[0]>0){
 			if(count>N_min){
-				deltat=deltat*f_inc<deltatmax?deltat*f_inc:deltatmax;
+				Dt=Dt*f_inc<Dtmax?Dt*f_inc:Dtmax;
 				alpha=alpha*f_alpha;
 			}
 			count=0;
 		}
 		else{
 			count++;
-			deltat=deltat*f_dec;
+			Dt=Dt*f_dec;
 			freeze(N,allpart);
 			alpha=alpha_start;
 		}
-		//Go to MD
 		i++;
 		std::cout<<i<<std::endl;
-	}while(powmaxf[1]>1e-9);
+		//Go to MD
+	}while(i<10);
 }
