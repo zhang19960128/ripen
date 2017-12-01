@@ -10,9 +10,9 @@ extern double f_dec;
 extern double alpha_start;
 extern double f_alpha;
 int main(){
-	int N=200;
+	int N=2;
 	double len;//configure the size of a cubic to store the bubbles. 
-	double fraction=0.75;
+	double fraction=2;
 	double tempr;
 	particle* allpart=new particle[N];
 	std::vector<double> coord(3,0.0);
@@ -28,16 +28,20 @@ int main(){
 	for(size_t t=0;t<N;t++){
 		temp_volume=temp_volume+allpart[t].getvolume();
 	}
-	len=cbrt(temp_volume);
+	len=cbrt(temp_volume/fraction);
+	std::cout<<len<<std::endl;
 	//generate the random position for those particles.
 	for(size_t i=0;i<N;i++){
 		coord[0]=len*genrand();
 		coord[1]=len*genrand();
 		coord[2]=len*genrand();
 		allpart[i].changeposition(coord);
+		std::cout<<allpart[i];
 	}
 	//start my fire algorithm
 	std::vector<double> force(3,0);
-	force=interactall(1,N,allpart);
+	force=interactall(0,N,allpart);
 	std::cout<<force[0]<<std::endl;
+	std::cout<<force[1]<<std::endl;
+	std::cout<<force[2]<<std::endl;
 }

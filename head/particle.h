@@ -2,6 +2,7 @@
 #define PARTICLE_H
 #include <iostream>
 #include <vector>
+#include <cmath>
 class particle{
 	public:
 		particle()=default;
@@ -30,6 +31,14 @@ class particle{
 		void changeposition(std::vector<double>& posi){
 			coordinate=posi;
 		};
+		//changing radius by in comming radius
+		void changerby(double r){
+			radius=r;
+		}
+		//changing radius by know the volume
+		void changerbv(double volume){
+			radius=cbrt(3*volume/4/3.141592653);
+		}
 		friend std::ostream& operator<<(std::ostream&,particle&);
 		~particle(){
 			coordinate.clear();

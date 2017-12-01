@@ -6,11 +6,11 @@ std::vector<double> interact(particle& r1,particle& r2){
 	double dij=r1.getradius()+r2.getradius();
 	std::vector<double> force(3,0);
 	double rij=0;
-	if(rij>dij) return force;
 	for(size_t i=0;i<3;i++){
 		rij=rij+(r1.getcoordinate()[i]-r2.getcoordinate()[i])*(r1.getcoordinate()[i]-r2.getcoordinate()[i]);
 	}
 	rij=sqrt(rij);
+	if(rij>dij) return force;
 	for(size_t i=0;i<3;i++){
 		force[i]=2*(1-rij/dij)*(r1.getcoordinate()[i]-r2.getcoordinate()[i])/dij/rij;
 	}
