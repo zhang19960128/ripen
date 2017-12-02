@@ -37,25 +37,40 @@ std::vector<double>interactall(double len,int index,int size,particle* allpart){
 	}
 	return allforce;
 }
-std::vector<double> powersetspeed(int size,double len,double alpha,particle* allpart){
+std::vector<double> powersetspeed(int size,double deltat,double len,double alpha,particle* allpart){
 //this function calculate the full power and set the speed of the system
 //we also use this function to get the maximum force.
 	std::vector<double> tempforce(3,0);
 	std::vector<double> tempspeed(3,0);
 	std::vector<double> result(2,0);//store power first and then maximum force;
-	double temppower;
+	double temppower=0;
 	double tempforceabs=0;
+	double normspeed=0;
+	double normforce=0;
 	double maxforce=0;
 	for(size_t i=0;i<size;i++){
 		tempforce=interactall(len,i,size,allpart);
-		for(size_t k=0;k<3;k++){
-			tempforceabs=tempforceabs+tempforce[k]*tempforce[k];
+		//this is the second step of leap frog;
+  	for(size_t j=0;j<3;j++){
+				tempspeed[j]=allpart[i].getspeed()[j]+0.5*deltat*tempforce[j];
+				normspeed=normspeed+tempspeed[j]*tempspeed[j];
+				normforce=normforce+tempforce[j]*tempforce[j];
 		}
-		tempforceabs=sqrt(tempforceabs);
-		if(tempforceabs>maxforce) maxforce=tempforceabs;
+		if(maxforce<allpart[i].getforceabs()) maxforce=allpart[i].getforceabs();
+		allpart[i].changespeed(tempspeed);
+		allpart[i].changeforce(tempforce);
+   // At this point, we finished the second step of leap frog and can started fire algoritm.
+	}
+	// we started to calculate the power of the system.
+	for(size_t i=0;i<size;i++){
 		for(size_t j=0;j<3;j++){
-			temppower=temppower+allpart[i].getspeed()[j]*tempforce[j];
-			tempspeed[j]=(1-alpha)*allpart[i].getspeed()[j]+alpha*tempforce[j]/tempforceabs*allpart[i].getspeedabs();
+			temppower=temppower+allpart[i].getforce()[j]*allpart[i].getspeed()[j];
+		}
+	}
+	// we started to set the speed of the system.
+	for(size_t i=0;i<size;i++){
+		for(size_t j=0;j<3;j++){
+			tempspeed[j]=allpart[i].getspeed()[j]*(1-alpha)+alpha*allpart[i].getforce()[j]/sqrt(normforce)*sqrt(normspeed);
 		}
 		allpart[i].changespeed(tempspeed);
 	}
@@ -76,12 +91,13 @@ void leapfrogone(int size,double deltat,double len,particle* allpart){
 			templocation[j]=allpart[i].getcoordinate()[j]+deltat*allpart[i].getspeed()[j]+1.0/2*allpart[i].getforce()[j]*deltat*deltat;
 			templocation[j]=templocation[j]/len;
 			templocation[j]=(templocation[j]-round(templocation[j]))*len;
-			tempspeed[j]=allpart[i].getspeed()[j]+0.5*deltat*allpart[i].getforce()[j];
+			tempspeed[j]=allpart[i].getspeed()[j]+1.0/2*deltat*allpart[i].getforce()[j];
 		}
 		allpart[i].changeposition(templocation);
 		allpart[i].changespeed(tempspeed);
 	}
 }
+/*
 void leapfrogtwo(int size,double deltat,particle* allpart){
 	std::vector<double> tempspeed(3,0);
 	for(size_t i=0;i<size;i++){
@@ -91,3 +107,4 @@ void leapfrogtwo(int size,double deltat,particle* allpart){
 		allpart[i].changespeed(tempspeed);
 	}
 }
+*/

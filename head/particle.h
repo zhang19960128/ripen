@@ -27,16 +27,16 @@ class particle{
 		std::vector<double> getforce(){
 			return force;
 		}
-		double getradius(){
-			return radius;
-		};
-		double getspeedabs(){
-			double temp=0;
+		double getforceabs(){
+			double temp;
 			for(size_t i=0;i<3;i++){
-				temp=temp+speed[i]*speed[i];
+				temp=temp+force[i]*force[i];
 			}
 			return sqrt(temp);
 		}
+		double getradius(){
+			return radius;
+		};
 		double getvolume(){
 			return 3.141592653*4/3.0*radius*radius*radius;
 		}
