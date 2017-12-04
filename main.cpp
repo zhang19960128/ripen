@@ -12,13 +12,15 @@ extern double f_dec;
 extern double alpha_start;
 extern double f_alpha;
 int main(){
-	int N=50;
-	double Dt=0.01;
+	int N=100;
+	double Dt=0.05;
 	double Dtmax=Dt*10;
 	double len;//configure the size of a cubic to store the bubbles. 
 	double fraction=0.88;
 	double tempr;
 	double alpha=alpha_start;
+	double e_before=0;
+	double e_end=0;
 	particle* allpart=new particle[N];
 	std::vector<double> coord(3,0.0);
 	std::vector<double> spee(3,0.0);
@@ -44,13 +46,15 @@ int main(){
 		allpart[i].changeposition(coord);
 	}
 	//start my fire algorithm
-	std::vector<double> powmaxf;
+	double pow;
 	int count=0;
 	int i=0;
 	do{
+		e_before=e_end;
+		std::cout<<"the whole energy now is:"<<e_before<<std::endl;
 		leapfrogone(N,Dt,len,allpart);
-		powmaxf=powersetspeed(N,Dt,len,alpha,allpart);
-		if(powmaxf[0]>0){
+		pow=powersetspeed(N,Dt,len,alpha,allpart);
+		if(pow>0){
 			if(count>N_min){
 				Dt=Dt*f_inc<Dtmax?Dt*f_inc:Dtmax;
 	//			std::cout<<"Dt is equal to:"<<Dt<<std::endl;
@@ -65,11 +69,10 @@ int main(){
 			alpha=alpha_start;
 		}
 		i++;
-  	std::cout<<"step:"<<i<<"maxforce:"<<powmaxf[1]<<std::endl;
-		//Go to MD
-	}while(powmaxf[1]>1e-9);
+		e_end=energy(N,allpart);
+	}while(std::abs(e_end-e_before)>1e-14);
 	std::fstream myfile;
-	myfile.open("good.txt");
+	myfile.open("good.txt",std::fstream::out);
 	for(size_t i=0;i<N;i++){
 		for(size_t j=0;j<3;j++){
 			myfile<<allpart[i].getcoordinate()[j]<<" ";

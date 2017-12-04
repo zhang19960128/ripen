@@ -1,6 +1,28 @@
 #include <cmath>
 #include <iostream>
 #include "particle.h"
+double energy(int size,particle* allpart){
+	double ener=0;
+	double rij=0;
+	double dij=0;
+	double temp;
+	for(size_t i=0;i<size;i++)
+		for(size_t j=0;j<size;j++){
+			for(size_t k=0;k<3;k++){
+				temp=(allpart[i].getcoordinate()[k]-allpart[j].getcoordinate()[k]);
+				rij=rij+temp*temp;
+			}
+			dij=allpart[i].getradius()+allpart[j].getradius();
+			rij=sqrt(rij);
+			dij=allpart[i].getradius()+allpart[j].getradius();
+			if(rij>dij) ener=ener+0;
+			else{
+				ener=(1-rij/dij)*(1-rij/dij);
+			}
+		}
+	ener=ener/2.0;
+	return ener;
+}
 std::vector<double> interact(double len,particle& r1,particle& r2){
 	//this is the force exerceted on praticle r1 using repusive force.
 	double dij=r1.getradius()+r2.getradius();
@@ -9,14 +31,14 @@ std::vector<double> interact(double len,particle& r1,particle& r2){
 	double temp=0;
 	for(size_t i=0;i<3;i++){
 	temp=(r1.getcoordinate()[i]-r2.getcoordinate()[i]);
-	temp=(temp-round(temp))*len;
+	temp=(temp/len-round(temp/len))*len;
 		rij=rij+temp*temp;
 	}
 	rij=sqrt(rij);
 	if(rij>dij) return force;
 	for(size_t i=0;i<3;i++){
 		temp=r1.getcoordinate()[i]-r2.getcoordinate()[i];
-		temp=(temp-round(temp))*len;	
+		temp=(temp/len-round(temp/len))*len;	
 		force[i]=2*(1-rij/dij)*(temp)/dij/rij;
 	}
 	return force;
@@ -37,17 +59,15 @@ std::vector<double>interactall(double len,int index,int size,particle* allpart){
 	}
 	return allforce;
 }
-std::vector<double> powersetspeed(int size,double deltat,double len,double alpha,particle* allpart){
+double powersetspeed(int size,double deltat,double len,double alpha,particle* allpart){
 //this function calculate the full power and set the speed of the system
 //we also use this function to get the maximum force.
 	std::vector<double> tempforce(3,0);
 	std::vector<double> tempspeed(3,0);
-	std::vector<double> result(2,0);//store power first and then maximum force;
-	double temppower=0;
+  double temppower=0;
 	double tempforceabs=0;
 	double normspeed=0;
 	double normforce=0;
-	double maxforce=0;
 	for(size_t i=0;i<size;i++){
 		tempforce=interactall(len,i,size,allpart);
 		//this is the second step of leap frog;
@@ -56,8 +76,7 @@ std::vector<double> powersetspeed(int size,double deltat,double len,double alpha
 				normspeed=normspeed+tempspeed[j]*tempspeed[j];
 				normforce=normforce+tempforce[j]*tempforce[j];
 		}
-		if(maxforce<allpart[i].getforceabs()) maxforce=allpart[i].getforceabs();
-		allpart[i].changespeed(tempspeed);
+  	allpart[i].changespeed(tempspeed);
 		allpart[i].changeforce(tempforce);
    // At this point, we finished the second step of leap frog and can started fire algoritm.
 	}
@@ -74,9 +93,7 @@ std::vector<double> powersetspeed(int size,double deltat,double len,double alpha
 		}
 		allpart[i].changespeed(tempspeed);
 	}
-	result[0]=temppower;
-	result[1]=maxforce;
-	return result;
+	return temppower;
 }
 void freeze(int size,particle* allpart){
 	for(size_t i=0;i<size;i++){
